@@ -1,0 +1,36 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.table {
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.pagination {
+  margin: 20px 0;
+}
+
+.page-item.disabled .page-link {
+  pointer-events: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.page-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  color: #0056b3;
+  text-decoration: none;
+}

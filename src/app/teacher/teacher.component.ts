@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { TeacherService, Teacher } from '../teacher.service';
 import { TeacherOperationComponent } from '../teacher-operation/teacher-operation.component';
+import { NotificationComponent } from '../notification/notification.component';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-teacher',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, TeacherOperationComponent],
+  imports: [CommonModule, HttpClientModule, TeacherOperationComponent, NotificationComponent],
   templateUrl: './teacher.component.html',
   styleUrls: ['./teacher.component.css']
 })
@@ -21,7 +23,7 @@ export class TeacherComponent implements OnInit {
   pageSize = 10;
   totalPages = 0;
 
-  constructor(private teacherService: TeacherService) {}
+  constructor(private teacherService: TeacherService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.loadTeachers();
@@ -54,6 +56,7 @@ export class TeacherComponent implements OnInit {
   deleteTeacher(id: number): void {
     this.teacherService.deleteTeacher(id).subscribe(() => {
       this.loadTeachers();
+      this.notificationService.showNotification('Teacher deleted successfully');
     });
   }
 

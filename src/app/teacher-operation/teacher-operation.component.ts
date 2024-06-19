@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Teacher, TeacherService } from '../teacher.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Component({
   selector: 'app-teacher-operation',
@@ -18,7 +19,7 @@ export class TeacherOperationComponent implements OnChanges {
 
   teacherForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private teacherService: TeacherService) {
+  constructor(private fb: FormBuilder, private teacherService: TeacherService, private notificationService: NotificationService) {
     this.teacherForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(20), Validators.max(70)]],
@@ -41,11 +42,13 @@ export class TeacherOperationComponent implements OnChanges {
         this.teacherService.updateTeacher(this.teacher.id, teacherData).subscribe(() => {
           this.refresh.emit();
           this.close();
+          this.notificationService.showNotification('Teacher updated successfully');
         });
       } else {
         this.teacherService.addTeacher(teacherData).subscribe(() => {
           this.refresh.emit();
           this.close();
+          this.notificationService.showNotification('Teacher added successfully');
         });
       }
     }
