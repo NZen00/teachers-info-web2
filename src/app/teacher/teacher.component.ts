@@ -14,7 +14,12 @@ import { TeacherOperationComponent } from '../teacher-operation/teacher-operatio
 export class TeacherComponent implements OnInit {
   teachers: Teacher[] = [];
   selectedTeacher: Teacher | null = null;
+  paginatedTeachers: Teacher[] = [];
   display = 'none';
+
+  currentPage = 1;
+  pageSize = 10;
+  totalPages = 0;
 
   constructor(private teacherService: TeacherService) {}
 
@@ -25,7 +30,15 @@ export class TeacherComponent implements OnInit {
   loadTeachers(): void {
     this.teacherService.getTeachers().subscribe(data => {
       this.teachers = data;
+      this.totalPages = Math.ceil(this.teachers.length / this.pageSize);
+      this.updatePaginatedTeachers();
     });
+  }
+
+  updatePaginatedTeachers(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedTeachers = this.teachers.slice(startIndex, endIndex);
   }
 
   openModal(teacher?: Teacher): void {
@@ -34,6 +47,7 @@ export class TeacherComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.selectedTeacher = null;
     this.display = 'none';
   }
 
@@ -41,5 +55,13 @@ export class TeacherComponent implements OnInit {
     this.teacherService.deleteTeacher(id).subscribe(() => {
       this.loadTeachers();
     });
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return;
+    }
+    this.currentPage = page;
+    this.updatePaginatedTeachers();
   }
 }
