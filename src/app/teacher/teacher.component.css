@@ -4,8 +4,9 @@
 }
 
 .table {
-  margin-bottom: 1rem;
-  color: #212529;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 0;
 }
 
 .pagination {
