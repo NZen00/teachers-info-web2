@@ -1,0 +1,39 @@
+<!-- teacher.component.html -->
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Teachers List</h2>
+    <button class="btn btn-primary" (click)="openModal()">Add Teacher</button>
+  </div>
+  <table class="table table-striped table-hover table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th>Teacher's Name</th>
+      <th>Age</th>
+      <th>Subject</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let teacher of teachers">
+      <td>{{ teacher.name }}</td>
+      <td>{{ teacher.age }}</td>
+      <td>{{ teacher.subject }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm" (click)="openModal(teacher)">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="deleteTeacher(teacher.id)">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <app-teacher-operation
+    [teacher]="selectedTeacher"
+    [display]="display"
+    (refresh)="loadTeachers()"
+    (closeModal)="closeModal()"
+  ></app-teacher-operation>
+</div>

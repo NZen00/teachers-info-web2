@@ -1,0 +1,57 @@
+<!-- teacher-operation.component.html -->
+<div class="modal" tabindex="-1" [ngStyle]="{'display': display}" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ teacher ? 'Edit Teacher' : 'Add Teacher' }}</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+              [ngClass]="{'is-invalid': isInvalid('name')}"
+            />
+            <div *ngIf="isInvalid('name')" class="invalid-feedback">
+              Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              id="age"
+              class="form-control"
+              formControlName="age"
+              [ngClass]="{'is-invalid': isInvalid('age')}"
+            />
+            <div *ngIf="isInvalid('age')" class="invalid-feedback">
+              Age must be between 20 and 70.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              class="form-control"
+              formControlName="subject"
+              [ngClass]="{'is-invalid': isInvalid('subject')}"
+            />
+            <div *ngIf="isInvalid('subject')" class="invalid-feedback">
+              Subject is required.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{ teacher ? 'Update' : 'Add' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
